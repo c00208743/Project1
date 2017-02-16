@@ -73,24 +73,28 @@ void Game::run()
 			{
 				// Set Model Rotation
 				model = rotate(model, 0.01f, glm::vec3(0, 1, 0)); // Rotate
+				model = translate(model, glm::vec3(-0.3, 0, 0)); // translate
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
 				// Set Model Rotation
 				model = rotate(model, -0.01f, glm::vec3(0, 1, 0)); // Rotate
+				model = translate(model, glm::vec3(0.3, 0, 0)); // translate
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
 				// Set Model Rotation
 				model = rotate(model, -0.01f, glm::vec3(1, 0, 0)); // Rotate
+				model = translate(model, glm::vec3(0, 0.3, 0)); // translate
 			}
 
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
 				// Set Model Rotation
 				model = rotate(model, 0.01f, glm::vec3(1, 0, 0)); // Rotate
+				model = translate(model, glm::vec3(0, -0.3, 0)); // translate
 			}
 		}
 		update();
