@@ -16,6 +16,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+#include <math.h>
 
 using namespace std;
 using namespace sf;

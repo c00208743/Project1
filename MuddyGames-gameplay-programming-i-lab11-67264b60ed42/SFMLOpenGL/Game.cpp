@@ -1,7 +1,7 @@
 #include <Game.h>
 #include <Cube.h>
 #include <Player.h>
-#include "math.h"
+#include <stdlib.h>  
 
 GLuint	vsid,		// Vertex Shader ID
 		fsid,		// Fragment Shader ID
@@ -9,8 +9,7 @@ GLuint	vsid,		// Vertex Shader ID
 		vao = 0,	// Vertex Array ID
 		vbo,		// Vertex Buffer ID
 		vib,		// Vertex Index Buffer
-		to1,			// Texture ID 1 to 32
-		to2,			// Texture ID 1 to 32
+		to[2],			// Texture ID 1 to 32
 		positionID,	// Position ID
 		colorID,	// Color ID
 		textureID,	// Texture ID
@@ -22,8 +21,8 @@ GLuint	vsid,		// Vertex Shader ID
 //const string filename = "grid.tga";
 //const string filename = "grid_wip.tga";
 //const string filename1 = "minecraft.tga";
-const string filename1 = "texture.tga";
-const string filename2 = "texture_2.tga";
+const string filename1 = "player.tga";
+const string filename2 = "npc.tga";
 //const string filename = "uvtemplate.tga";
 
 
@@ -78,7 +77,7 @@ void Game::run()
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
 				// Set Model Rotation
-				if (player[3].x >= -5)
+				if (player[3].x >= -5 && player[3].x != 10)
 				{
 					// Set Model Rotation
 					//player = rotate(player, 0.01f, glm::vec3(0, 1, 0)); // Rotate
@@ -270,8 +269,9 @@ void Game::initialize()
 	}
 
 	glEnable(GL_TEXTURE_2D);
-	glGenTextures(1, &to1);
-	glBindTexture(GL_TEXTURE_2D, to1);
+	glGenTextures(2, &to[0]);
+	
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	//Wrap around
 	//https://www.khronos.org/opengles/sdk/docs/man/xhtml/glTexParameter.xml
@@ -297,9 +297,7 @@ void Game::initialize()
 		img_data1				//Image Data
 		);
 
-	glEnable(GL_TEXTURE_2D);
-	glGenTextures(1, &to2);
-	glBindTexture(GL_TEXTURE_2D, to2);
+	glBindTexture(GL_TEXTURE_2D, 1);
 
 	//Wrap around
 	//https://www.khronos.org/opengles/sdk/docs/man/xhtml/glTexParameter.xml
@@ -448,18 +446,29 @@ void Game::update(sf::Time deltaTime)
 	}
 
 	//collison
-
-	if (Math.abs(player[3].x - model1[3].x) < 1)
+	if (player[3].x >= model1[3].x - 1 && player[3].x <= model1[3].x + 2 && player[3].x >= model1[3].x + 1 && player[3].x <= model1[3].x -2 && player[3].y >= model3[3].y - 2 && player[3].y <= model3[3].y + 2 && player[3].z >= model1[3].z -1 && player[3].z <= model1[3].z + 2 )
 	{
-		//check the Y axis
-		if (Math.abs(player[3].y - model1[3].y) < 1)
-		{
-			//check the Z axis
-			if (Math.abs(player[3].z - model1[3].z) < 1)
-			{
-				return true;
-			}
-		}
+		player[3].x = 10;
+	}
+	if (player[3].x >= model2[3].x - 1 && player[3].x <= model2[3].x + 2 && player[3].y >= model3[3].y - 2 && player[3].y <= model3[3].y + 2 && player[3].z >= model2[3].z - 1 && player[3].z <= model2[3].z + 2)
+	{
+		player[3].x = 10;
+	}
+	if (player[3].x >= model3[3].x - 1 && player[3].x <= model3[3].x + 2 && player[3].y >= model3[3].y - 2 && player[3].y <= model3[3].y + 2 && player[3].z >= model3[3].z - 1 && player[3].z <= model3[3].z + 2)
+	{
+		player[3].x = 10;
+	}
+	if (player[3].x >= model3[3].x - 1 && player[3].x <= model3[3].x + 2 && player[3].y >= model3[3].y - 2 && player[3].y <= model3[3].y + 2 && player[3].z >= model3[3].z - 1 && player[3].z <= model3[3].z + 2)
+	{
+		player[3].x = 10;
+	}
+	if (player[3].x >= model4[3].x - 1 && player[3].x <= model4[3].x + 2 && player[3].y >= model3[3].y - 2 && player[3].y <= model3[3].y + 2 && player[3].z >= model4[3].z - 1 && player[3].z <= model4[3].z - 2)
+	{
+		player[3].x = 10;
+	}
+	if (player[3].x >= model5[3].x - 1 && player[3].x <= model5[3].x + 2 && player[3].y >= model3[3].y - 2 && player[3].y <= model3[3].y + 2 && player[3].z >= model5[3].z - 1 && player[3].z <= model5[3].z + 2)
+	{
+		player[3].x = 10;
 	}
 
 }
@@ -487,7 +496,7 @@ void Game::render()
 
 	//Set Active Texture .... 32
 	glActiveTexture(GL_TEXTURE0);
-	glUniform1i(textureID, to1);
+	glUniform1i(textureID, 0);
 
 	//Set pointers for each parameter (with appropriate starting positions)
 	//https://www.khronos.org/opengles/sdk/docs/man/xhtml/glVertexAttribPointer.xml
@@ -520,10 +529,6 @@ void Game::render()
 	// Send transformation to shader mvp uniform
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
 
-	//Set Active Texture .... 32
-	glActiveTexture(GL_TEXTURE0);
-	glUniform1i(textureID, to1);
-
 	//Set pointers for each parameter (with appropriate starting positions)
 	//https://www.khronos.org/opengles/sdk/docs/man/xhtml/glVertexAttribPointer.xml
 	glVertexAttribPointer(positionID, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -555,10 +560,6 @@ void Game::render()
 	// Send transformation to shader mvp uniform
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
 
-	//Set Active Texture .... 32
-	glActiveTexture(GL_TEXTURE0);
-	glUniform1i(textureID, to1);
-
 	//Set pointers for each parameter (with appropriate starting positions)
 	//https://www.khronos.org/opengles/sdk/docs/man/xhtml/glVertexAttribPointer.xml
 	glVertexAttribPointer(positionID, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -589,10 +590,6 @@ void Game::render()
 
 	// Send transformation to shader mvp uniform
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
-
-	//Set Active Texture .... 32
-	glActiveTexture(GL_TEXTURE0);
-	glUniform1i(textureID, to1);
 
 	//Set pointers for each parameter (with appropriate starting positions)
 	//https://www.khronos.org/opengles/sdk/docs/man/xhtml/glVertexAttribPointer.xml
@@ -626,10 +623,6 @@ void Game::render()
 	// Send transformation to shader mvp uniform
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
 
-	//Set Active Texture .... 32
-	glActiveTexture(GL_TEXTURE0);
-	glUniform1i(textureID, to1);
-
 	//Set pointers for each parameter (with appropriate starting positions)
 	//https://www.khronos.org/opengles/sdk/docs/man/xhtml/glVertexAttribPointer.xml
 	glVertexAttribPointer(positionID, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -646,7 +639,7 @@ void Game::render()
 	/// <summary>
 	/// //////////////////////////////////////////////////////////////////////////////playa
 	/// </summary>
-
+	
 	mvp = projection * view * player;
 
 //	player = translate(player, vec3(-3.0f, 0.0f, 0.0f));
@@ -661,7 +654,7 @@ void Game::render()
 
 	//Set Active Texture .... 32
 	glActiveTexture(GL_TEXTURE0);
-	glUniform1i(textureID, to2);
+	glUniform1i(textureID, 1);
 
 	//Set pointers for each parameter (with appropriate starting positions)
 	//https://www.khronos.org/opengles/sdk/docs/man/xhtml/glVertexAttribPointer.xml
