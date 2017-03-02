@@ -28,13 +28,18 @@ public:
 	Game(sf::ContextSettings settings);
 	~Game();
 	void run();
+	bool jumping = false;
+	bool falling = false;
+
 private:
 	Window window;
+	sf::Time m_cumulativeTime;
 	bool isRunning = false;
 	void initialize();
-	void update();
+	void update(sf::Time);
 	void render();
 	void unload();
+	double count = 0;
 };
 
 #endif

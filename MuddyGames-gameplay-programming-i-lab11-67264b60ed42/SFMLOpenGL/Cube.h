@@ -71,6 +71,7 @@ static const GLfloat vertices[] =
 	 1.00f,  1.00f,  1.00f, // [2]	// (23)
 };
 
+
 static const GLfloat colors[] = {
 	
 	// Front Face

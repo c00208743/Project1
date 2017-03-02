@@ -70,7 +70,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(GLM_SDK);$(ProjectDir);$(GLEW_SDK)\include;$(SFML_SDK)\include;$(GLM_SDK);$(SFML_SDK)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(GLM_SDK)\include;$(ProjectDir);$(GLEW_SDK)\include;$(SFML_SDK)\include;$(GLM_SDK);$(SFML_SDK)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SFML_SDK)\lib;$(GLEW_SDK)\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -80,7 +80,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(GLM_SDK);$(ProjectDir);$(GLEW_SDK)\include;$(SFML_SDK)\include;$(SFML_SDK)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(GLM_SDK)\include;$(ProjectDir);$(GLEW_SDK)\include;$(SFML_SDK)\include;$(SFML_SDK)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SFML_SDK)\lib;$(GLEW_SDK)\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -98,7 +98,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-network-d.lib;OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;OpenGL32.lib;GlU32.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(GLEW_SDK)\lib;$(GLM_SDK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -137,6 +137,7 @@ xcopy $(GLEW_SDK)\bin\Release\Win32 $(TargetDir) /C /Y</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(GLEW_SDK)\lib;$(GLM_SDK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;OpenGL32.lib;GlU32.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -161,6 +162,7 @@ xcopy $(GLEW_SDK)\bin\Release\Win32 $(TargetDir) /C /Y</Command>
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Matrix3.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
